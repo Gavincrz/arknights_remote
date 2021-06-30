@@ -1,28 +1,19 @@
 import logging
 import socket
+
+import config
 from ppadb.client import Client as AdbClient
 
 logger = logging.getLogger(__name__)
 
 
-def dump_output(connection):
-    while True:
-        data = connection.read(1024)
-        if not data:
-            break
-        print(data.decode('utf-8'))
-    connection.close()
-
-
 class ADBSession():
-    def __init__(self, server=None):
-        if server is None:
-            server = ('127.0.0.1', 5037) # default adb port
+    def __init__(self, server, serial=None):
         self.server = server
-        self.client = AdbClient(host=server[0], port=server[1])
+        self.client = AdbClient(host=self.server[0], port=self.server[1])
 
         if self.client is not None:
-            logger.debug(f"Create to adb client succssfully! {server[0]}:{server[1]}")
+            logger.debug(f"Create to adb client succssfully! {self.server[0]}:{self.server[1]}")
 
         devices = self.client.devices()
         if len(devices) > 0:
@@ -31,9 +22,10 @@ class ADBSession():
         else:
             logger.error("No device found")
 
-    def test_shell(self):
-        self.device.shell("echo hello world !", handler=dump_output)
-        self.device.shell("ls -la", handler=dump_output)
+
+    def exec_cmd(self, cmd):
+        """ run command in adb shell """
+        return self.device.shell(cmd)
 
     def list_devices(self):
         devices = self.client.devices()
