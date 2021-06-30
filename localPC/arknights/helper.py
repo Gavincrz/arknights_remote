@@ -11,7 +11,7 @@ class ArkHelper():
         self.get_uname()
 
     def focus_game(self):
-        """ make sure arknights is the current focused window"""
+        # make sure arknights is the current focused window
         logger.debug("Try to launch the game ...")
         if not self.is_current_focus():
             self.start_game()
@@ -22,7 +22,7 @@ class ArkHelper():
         logger.debug(ret.strip())
 
     def is_current_focus(self):
-        """ check if arknights is the current focused window """
+        # check if arknights is the current focused window
         logger.debug("Checking if Arknights started ...")
         result = self.sess.exec_cmd("dumpsys window windows | grep mCurrentFocus")
         logger.debug(result.strip())
@@ -30,12 +30,18 @@ class ArkHelper():
             logger.debug("Arknights is launched and is the focused one!")
             return True
         else:
-            logger.debug("Arknights is not the current focused window!")
+            logger.debug("Arknights is not the current focused window.")
             return False
 
     def get_uname(self):
         logger.debug(f"Device info: {self.sess.exec_cmd('uname -r').strip()}")
 
+
+    def get_screenshot(self):
+        img = self.sess.get_screenshot()
+        return img
+
     def test(self):
-        print(self.sess.exec_cmd("dumpsys window windows | grep mCurrentFocus"))
+        # storage button: 1337, 738
+        self.sess.tap_screen(1337, 738)
     
