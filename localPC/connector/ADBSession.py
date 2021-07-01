@@ -37,7 +37,7 @@ class ADBSession():
 
     def get_screen_size(self):
         image = self.get_screenshot()
-        self.height, self.width, self.channel = image.shape
+        self.width, self.height, self.channel = image.shape
         logger.debug(f"Screen size is ({self.height}, {self.width}, {self.channel})")
 
     def exec_cmd(self, cmd):
