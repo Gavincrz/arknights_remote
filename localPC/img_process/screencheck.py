@@ -1,5 +1,5 @@
 import logging
-from . import imgops
+from . import imgops 
 
 logger = logging.getLogger(__name__)
 
@@ -16,4 +16,9 @@ def check_icon_exist(img, screen_name, icon_name):
 def check_at_main(img):
     return check_icon_exist(img, "main_screen", "form_team")
 
+def check_navi_bar(img):
+    return check_icon_exist(img, "common", "navi_bar")
+
+def get_navi_bar_point(img_shape):
+    return imgops.get_left_top_corner(img_shape, "common", "navi_bar")
 

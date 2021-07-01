@@ -1,7 +1,10 @@
 import logging
 import sys
+import time
 import config
 from connector.ADBSession import ADBSession
+from img_process import screencheck as screenCK
+
 logger = logging.getLogger(__name__)
 
 
@@ -41,7 +44,28 @@ class ArkHelper():
         img = self.sess.get_screenshot()
         return img
 
+    def back_to_main(self):
+        logger.info("Go back to main page...")
+        while True:
+            img = self.sess.get_screenshot()
+            # check if already at main page
+            if screenCK.check_at_main(img):
+                logger.info("Current page is the main page.")
+                break
+            # keep press back button if find navigation bar
+            if screenCK.check_navi_bar(img):
+                logger.debug("navigation bar tapped.")
+                self.tap_back_button(img.shape)
+            else:
+                # handle mail, notice, calender, setting, base_exit screen
+                pass
+            time.sleep(0.5)
+
+    def tap_back_button(self, img_shape):
+        self.sess.tap_screen(screenCK.get_navi_bar_point(img_shape))
+
     def test(self):
         # storage button: 1337, 738
-        self.sess.tap_screen(1337, 738)
+        self.sess.tap_screen((1337, 738))
     
+

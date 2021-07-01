@@ -57,8 +57,8 @@ class ADBSession():
         logger.debug(f"Get screenshot of size {image.shape}")
         return image
 
-    def tap_screen(self, x, y):
-        command = f"input tap {x} {y}"
+    def tap_screen(self, coord): # coord[0] = x, coord[1] = y
+        command = f"input tap {coord[0]} {coord[1]}"
         self.exec_cmd(command)
-        logger.debug(f"Tap screen: ({x},{y})")
+        logger.debug(f"Tap screen: ({coord[0]},{coord[1]})")
     

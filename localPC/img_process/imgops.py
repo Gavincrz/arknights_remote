@@ -64,3 +64,14 @@ def compare_image(img1, img2):
     img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
     result = cv2.matchTemplate(img1, img2, cv2.TM_CCOEFF_NORMED)[0, 0]
     return result
+
+
+def get_left_top_corner(img_shape, screen_name, icon_name):
+    height = img_shape[0]
+    width = img_shape[1]
+
+    # choose the lefttop corner of the rect
+    rect = icon_map[screen_name][icon_name]
+    real_rect = convert_rect(height, width, rect)
+
+    return real_rect[0]

@@ -13,16 +13,20 @@ icon_map = {
         "start_icon": ((676, 723), (90, 83))
     },
     "common": {
-        
+        "navi_bar": ((25, 18),(391, 50))
     }
 }
 
+# load image into icon_cache to avoid redundant disk I/O
 icon_cache = {
     "main_screen": {
         "form_team" : None
     },
     "start_screen": {
         "start_icon": None
+    },
+    "common": {
+        "navi_bar": None
     }
 }
 
