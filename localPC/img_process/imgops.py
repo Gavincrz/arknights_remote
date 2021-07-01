@@ -58,9 +58,11 @@ def crop_image(img, rect):
     crop_img = img[rect[0][1]: rect[0][1] + rect[1][1], rect[0][0]: rect[0][0] + rect[1][0]]
     return crop_img
 
+def resize_screencap_to_ref(img):
+    return cv2.resize(img, (ref_resolution[0], ref_resolution[1]))
 
 def compare_image(img1, img2):
-    # resize the image before comparing
+    # resize the image before comparing, two image should have the same size
     img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
     result = cv2.matchTemplate(img1, img2, cv2.TM_CCOEFF_NORMED)[0, 0]
     return result
@@ -75,3 +77,33 @@ def get_left_top_corner(img_shape, screen_name, icon_name):
     real_rect = convert_rect(height, width, rect)
 
     return real_rect[0]
+
+
+def get_top_right_rect(img):
+    width = img.shape[1]
+    height = img.shape[0]
+    return ((math.floor(width/2), 0), (math.floor(width/2), math.floor(height/2)))
+
+def find_image(img, screen_name, icon_name, search_rect):
+    # find icon in the image, two image do not need to have the same size
+    # https://docs.opencv.org/3.4/de/da9/tutorial_template_matching.html
+    # load the icon image
+    ref_img = get_ref_img(screen_name, icon_name)
+    
+    # get cropped area
+    crop_area = crop_image(img, search_rect)
+
+    # find the icon
+    result = cv2.matchTemplate(crop_area, ref_img, cv2.TM_CCOEFF_NORMED)
+
+    # localize the minimum and maximum values
+    _minVal, maxVal, minLoc, maxLoc = cv2.minMaxLoc(result, None)
+
+    # best match is the max value
+    # return the point and maxval 
+    # maxLoc is the relative loc of the cropped img, calculate the original loc
+    point = (search_rect[0][0] + maxLoc[0], search_rect[0][1] + maxLoc[1])
+
+    return point, maxVal
+
+

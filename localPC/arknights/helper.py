@@ -54,14 +54,33 @@ class ArkHelper():
                 break
             # keep press back button if find navigation bar
             if screenCK.check_navi_bar(img):
-                logger.debug("navigation bar tapped.")
                 self.tap_back_button(img.shape)
+                logger.debug("navigation bar (black) tapped.")
+                time.sleep(0.5)
+                continue
+            # check if at setting or mail page
+            if screenCK.check_navi_bar_setting(img):
+                self.tap_back_button_white(img.shape)
+                logger.debug("navigation bar (white) tapped.")
+                time.sleep(0.5)
+                continue
+            # check if x button exist (notice and calender screen)
+            point, exist = screenCK.find_x_button(img)
+            if exist:
+                # tap the x button to close the window
+                self.sess.tap_screen(point)
+                logger.debug("close button tapped.")
+                time.sleep(0.5)
+                continue
             else:
-                # handle mail, notice, calender, setting, base_exit screen
-                pass
-            time.sleep(0.5)
+                # handle base_exit screen and other dialog
+                time.sleep(0.5)
+            
 
     def tap_back_button(self, img_shape):
+        self.sess.tap_screen(screenCK.get_navi_bar_point(img_shape))
+
+    def tap_back_button_white(self, img_shape):
         self.sess.tap_screen(screenCK.get_navi_bar_point(img_shape))
 
     def test(self):

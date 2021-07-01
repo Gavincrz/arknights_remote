@@ -13,7 +13,9 @@ icon_map = {
         "start_icon": ((676, 723), (90, 83))
     },
     "common": {
-        "navi_bar": ((25, 18),(391, 50))
+        "navi_bar": ((25, 18),(391, 50)),
+        "navi_bar_white": ((42, 32),(57, 36)),
+        "x_button": ((1373, 42), (39, 42))
     }
 }
 
@@ -26,7 +28,9 @@ icon_cache = {
         "start_icon": None
     },
     "common": {
-        "navi_bar": None
+        "navi_bar": None,
+        "navi_bar_white": None,
+        "x_button": None
     }
 }
 
