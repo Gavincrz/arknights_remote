@@ -26,7 +26,10 @@ icon_map = {
     "common": {
         "navi_bar": ((25, 18),(391, 50)),
         "navi_bar_white": ((42, 32),(57, 36)),
-        "x_button": ((1373, 42), (39, 42))  
+        "x_button": ((1373, 42), (39, 42)),
+        "stage_icon_white": ((97, 372), (11, 30)),
+        "stage_icon_blue": ((418, 370), (11, 33)),
+        "stage_icon_op": ((124, 361), (91, 8))
     },
     "ep_cover": { # only used for dump
         "ep00": ((890, 240), (330, 330)),
@@ -63,7 +66,10 @@ icon_cache = {
     "common": {
         "navi_bar": None,
         "navi_bar_white": None,
-        "x_button": None
+        "x_button": None,
+        "stage_icon_white": None,
+        "stage_icon_blue": None,
+        "stage_icon_op": None
     },
     "ep_cover": { 
         "ep00": None,
@@ -84,7 +90,7 @@ main_story_part2_episodes = [4, 5, 6, 7, 8]
 
 main_stage_list = [
     ["0-1", "0-2", "0-3", "0-4", "0-5", "0-6", "0-7", "0-8", "0-9", "0-10", "0-11"], # stage 0
-    [], # stage 1
+    ["1-1", "1-2", "1-3", "1-4", "1-5", "1-6", "1-7", "1-8", "1-9", "1-10", "1-11", "1-12"], # stage 1
     [], # stage 2
     [], # stage 3
     [], # stage 4

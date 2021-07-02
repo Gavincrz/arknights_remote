@@ -106,4 +106,38 @@ def find_image(img, screen_name, icon_name, search_rect):
 
     return point, maxVal
 
+# find all appearance of ref_img
+def find_templates_in_img(img, ref_img, threshold):
+    result = cv2.matchTemplate(img, ref_img, cv2.TM_CCOEFF_NORMED)
+    loc = np.where(result >= threshold)
+    print(loc)
+    print(result[loc])
+    print(len(loc[0]))
+    return loc
 
+
+# copy from https://github.com/ninthDevilHAUNSTER/ArknightsAutoHelper
+def remove_holes(img):
+    # 去除小连通域 
+    # findContours 只能处理黑底白字的图像, 所以需要进行一下翻转
+    contours, hierarchy = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for i in range(len(contours)):
+        # 计算区块面积
+        area = cv2.contourArea(contours[i])
+        if area < 10:
+            # 将面积较小的点涂成白色，以去除噪点
+            cv2.drawContours(img, [contours[i]], 0, 255, -1)
+
+def process_tag_img_for_ocr(img):
+    # convert to grey
+    # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # threads hold and inverse (for background other than white)
+    img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+    if img[0, 0] < 127:
+        img = ~img
+    
+    # remove holes
+    remove_holes(img)
+
+    return img
