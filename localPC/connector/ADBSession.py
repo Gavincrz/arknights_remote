@@ -24,8 +24,6 @@ class ADBSession():
         else:
             logger.error("No device found")
 
-        self.get_screen_size()
-
     def shell_raw(self, cmd):
         # overwrite the shell function so that it returns raw byte instead of utf-8 decoded
         conn = self.device.create_connection(timeout=None)
@@ -62,3 +60,10 @@ class ADBSession():
         self.exec_cmd(command)
         logger.debug(f"Tap screen: ({coord[0]},{coord[1]})")
     
+    def touch_swipe(self, origin, movement, duration=None):
+        x1, y1, x2, y2 = origin[0], origin[1], origin[0] + movement[0], origin[1] + movement[1]
+        logger.debug(f"swipe from:({x1},{y1}); offset: dX:{movement[0]}, dy:{movement[1]}")
+        command = "input swipe {} {} {} {} ".format(x1, y1, x2, y2)
+        if duration is not None:
+            command += str(int(duration))
+        self.exec_cmd(command)
