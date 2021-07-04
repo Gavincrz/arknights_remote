@@ -170,8 +170,13 @@ class ArkHelper():
         logger.error("Episode cover not found.")
         return False
 
-    def goto_main_stage_from_ep_map(self, stage):
-        pass
+    def goto_main_stage_from_ep_map(self, ep, stage):
+        # use ocr to find stages in current screenshot, may happens
+        # swipe a few times 5
+        swipe_count = 0
+        while swipe_count < 5:
+            stage_list = screenCK.find_stages_in_screenshot(img, ep)
+            
 
     def goto_main_stage(self, stage):
         # enter main story screen
@@ -189,7 +194,7 @@ class ArkHelper():
             return False
 
         # find stage
-        self.goto_main_stage_from_ep_map(stage)
+        self.goto_main_stage_from_ep_map(stage, ep)
 
     def cmd_battle_main(self, stage, count):
         ret = self.goto_main_stage(stage)

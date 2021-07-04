@@ -171,4 +171,6 @@ def find_stages_in_screenshot(img, ep, threshold=0.7):
     logger.debug(f"stage_list after ocr: {stage_list}")
     stage_list = remove_outlier(ep, stage_list)
     logger.debug(f"stage_list after remove outlier: {stage_list}")
-    
+
+    return stage_list
+
