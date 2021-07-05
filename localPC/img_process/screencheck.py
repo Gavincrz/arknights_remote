@@ -148,6 +148,7 @@ def find_stages_in_screenshot(img, ep, threshold=0.7):
 
     stage_list = set()
     # get position of the rectangle
+    stage_loc_map = {}
     for loc in locs:
         # the tag is right below operation string
         rect = ((loc[0] + 2, loc[1] + 15), (stage_icon_op.shape[1] - 2, 30))
@@ -167,10 +168,11 @@ def find_stages_in_screenshot(img, ep, threshold=0.7):
 
         if stage_str in main_stage_list[ep]:
             stage_list.add(stage_str)
+            stage_loc_map[stage_str] = loc
 
     logger.debug(f"stage_list after ocr: {stage_list}")
     stage_list = remove_outlier(ep, stage_list)
     logger.debug(f"stage_list after remove outlier: {stage_list}")
 
-    return stage_list
+    return stage_list, stage_loc_map
 
