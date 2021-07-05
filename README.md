@@ -1,7 +1,5 @@
 # Arknights Remote Control
-## Background
-Arknights Bilibili Server can only run on android devices. This project tries to control a Android simulator running on a personal PC through webpages. Based on the initial plan, this project consists of three components: local simulator controller, web server and web client (browser)
-
-## Local Controller
-See [LocalPC](localPC/)  
-This part uses adb to control the Android simulator. Processes remote commands from the client. 
+暂时放弃了，这个应用场景还是不够实用。
+可以尝试：
+- 云手机服务，至少不用自家pc一直开启，听说很卡
+- 脱机，光抓包来看实在是有点困难，看起来机制挺复杂。需要逆向一下安卓包
